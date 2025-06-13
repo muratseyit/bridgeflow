@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -20,6 +19,8 @@ import {
 import { Link } from "react-router-dom";
 import { calculateMarketabilityScore, MarketabilityResult } from "@/utils/marketabilityEngine";
 import MarketabilityScoreCard from "@/components/MarketabilityScoreCard";
+import DocumentGenerator from "@/components/DocumentGenerator";
+import BusinessCompliance from "@/components/BusinessCompliance";
 
 const Dashboard = () => {
   const [businessData, setBusinessData] = useState<any>(null);
@@ -138,10 +139,14 @@ const Dashboard = () => {
         </div>
 
         <Tabs defaultValue="score" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="score" className="flex items-center">
               <BarChart3 className="h-4 w-4 mr-2" />
               AI Score
+            </TabsTrigger>
+            <TabsTrigger value="compliance" className="flex items-center">
+              <CheckCircle className="h-4 w-4 mr-2" />
+              Compliance
             </TabsTrigger>
             <TabsTrigger value="roadmap" className="flex items-center">
               <Target className="h-4 w-4 mr-2" />
@@ -165,6 +170,19 @@ const Dashboard = () => {
               <Card>
                 <CardContent className="flex items-center justify-center py-8">
                   <p>Calculating your marketability score...</p>
+                </CardContent>
+              </Card>
+            )}
+          </TabsContent>
+
+          {/* New Business Compliance Tab */}
+          <TabsContent value="compliance" className="space-y-6">
+            {businessData ? (
+              <BusinessCompliance businessData={businessData} />
+            ) : (
+              <Card>
+                <CardContent className="flex items-center justify-center py-8">
+                  <p>Loading compliance recommendations...</p>
                 </CardContent>
               </Card>
             )}
@@ -209,40 +227,17 @@ const Dashboard = () => {
             </Card>
           </TabsContent>
 
-          {/* Documents Tab */}
+          {/* Enhanced Documents Tab */}
           <TabsContent value="documents" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <FileText className="h-5 w-5 mr-2 text-blue-600" />
-                  UK Business Documents
-                </CardTitle>
-                <CardDescription>
-                  Generate and download essential documents for your UK business setup
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {documents.map((doc, index) => (
-                    <div key={index} className="p-4 border border-slate-200 rounded-lg hover:shadow-md transition-shadow">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-semibold text-slate-900">{doc.name}</h3>
-                        <Badge variant="outline">{doc.type}</Badge>
-                      </div>
-                      <div className="flex justify-between items-center mt-4">
-                        <Badge variant="secondary" className="text-xs">
-                          {doc.status === 'available' ? 'Ready to Generate' : 'In Progress'}
-                        </Badge>
-                        <Button size="sm" variant="outline">
-                          <Download className="h-4 w-4 mr-2" />
-                          Generate
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            {businessData ? (
+              <DocumentGenerator businessData={businessData} />
+            ) : (
+              <Card>
+                <CardContent className="flex items-center justify-center py-8">
+                  <p>Loading document generator...</p>
+                </CardContent>
+              </Card>
+            )}
           </TabsContent>
 
           {/* Partners Tab */}
