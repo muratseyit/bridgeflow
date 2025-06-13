@@ -3,57 +3,24 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { FileText, Download, Clock, CheckCircle } from "lucide-react";
 import { documentTemplates, generateDocument, DocumentTemplate } from "@/utils/documentGenerator";
 import { useToast } from "@/hooks/use-toast";
+import NDAGenerator from "./NDAGenerator";
+import IN01FormGenerator from "./IN01FormGenerator";
 
 interface DocumentGeneratorProps {
   businessData: any;
 }
 
 const DocumentGenerator = ({ businessData }: DocumentGeneratorProps) => {
-  const [selectedTemplate, setSelectedTemplate] = useState<DocumentTemplate | null>(null);
-  const [customFields, setCustomFields] = useState<{ [key: string]: string }>({});
-  const [generatingDocument, setGeneratingDocument] = useState(false);
   const [generatedDocuments, setGeneratedDocuments] = useState<any[]>([]);
   const { toast } = useToast();
 
-  const handleGenerateDocument = async () => {
-    if (!selectedTemplate) return;
-    
-    setGeneratingDocument(true);
-    
-    try {
-      // Simulate document generation
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      const document = generateDocument(selectedTemplate.id, businessData, customFields);
-      setGeneratedDocuments(prev => [...prev, document]);
-      
-      toast({
-        title: "Document Generated",
-        description: `${selectedTemplate.name} has been successfully generated.`,
-      });
-      
-      setSelectedTemplate(null);
-      setCustomFields({});
-    } catch (error) {
-      toast({
-        title: "Generation Failed",
-        description: "Failed to generate document. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setGeneratingDocument(false);
-    }
-  };
-
-  const updateCustomField = (field: string, value: string) => {
-    setCustomFields(prev => ({ ...prev, [field]: value }));
+  const handleDocumentGenerated = (document: any) => {
+    setGeneratedDocuments(prev => [...prev, document]);
   };
 
   const getTypeColor = (type: string) => {
@@ -100,94 +67,67 @@ const DocumentGenerator = ({ businessData }: DocumentGeneratorProps) => {
         </Card>
       )}
 
-      {/* Document Templates */}
+      {/* Document Generation Tabs */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
             <FileText className="h-5 w-5 mr-2 text-blue-600" />
-            Document Templates
+            Document Generator
           </CardTitle>
-          <CardDescription>Generate essential UK business documents</CardDescription>
+          <CardDescription>Generate essential UK business documents with enhanced functionality</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid md:grid-cols-2 gap-4">
-            {documentTemplates.map((template) => (
-              <div key={template.id} className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="font-semibold text-gray-900">{template.name}</h3>
-                  <Badge className={getTypeColor(template.type)}>
-                    {template.type}
-                  </Badge>
-                </div>
-                <p className="text-sm text-gray-600 mb-4">{template.description}</p>
-                
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button 
-                      size="sm" 
-                      className="w-full"
-                      onClick={() => setSelectedTemplate(template)}
-                    >
-                      Generate Document
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-md">
-                    <DialogHeader>
-                      <DialogTitle>Generate {template.name}</DialogTitle>
-                      <DialogDescription>
-                        Fill in the required information to generate your document
-                      </DialogDescription>
-                    </DialogHeader>
-                    
-                    {selectedTemplate?.id === template.id && (
-                      <div className="space-y-4">
-                        {template.requiredFields.map((field) => (
-                          <div key={field} className="space-y-2">
-                            <Label htmlFor={field}>
-                              {field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')}
-                            </Label>
-                            {field.includes('Description') ? (
-                              <Textarea
-                                id={field}
-                                value={customFields[field] || ''}
-                                onChange={(e) => updateCustomField(field, e.target.value)}
-                                placeholder={`Enter ${field}`}
-                              />
-                            ) : (
-                              <Input
-                                id={field}
-                                value={customFields[field] || ''}
-                                onChange={(e) => updateCustomField(field, e.target.value)}
-                                placeholder={`Enter ${field}`}
-                              />
-                            )}
-                          </div>
-                        ))}
-                        
-                        <Button 
-                          onClick={handleGenerateDocument}
-                          disabled={generatingDocument}
-                          className="w-full"
-                        >
-                          {generatingDocument ? (
-                            <>
-                              <Clock className="h-4 w-4 mr-2 animate-spin" />
-                              Generating...
-                            </>
-                          ) : (
-                            <>
-                              <FileText className="h-4 w-4 mr-2" />
-                              Generate Document
-                            </>
-                          )}
-                        </Button>
-                      </div>
-                    )}
-                  </DialogContent>
-                </Dialog>
+          <Tabs defaultValue="featured" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="featured">Featured</TabsTrigger>
+              <TabsTrigger value="all">All Templates</TabsTrigger>
+              <TabsTrigger value="custom">Custom Forms</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="featured" className="space-y-6">
+              <div className="grid gap-6">
+                <NDAGenerator 
+                  businessData={businessData} 
+                  onGenerated={handleDocumentGenerated}
+                />
+                <IN01FormGenerator 
+                  businessData={businessData} 
+                  onGenerated={handleDocumentGenerated}
+                />
               </div>
-            ))}
-          </div>
+            </TabsContent>
+
+            <TabsContent value="all" className="space-y-4">
+              <div className="grid md:grid-cols-2 gap-4">
+                {documentTemplates.map((template) => (
+                  <div key={template.id} className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                    <div className="flex justify-between items-start mb-3">
+                      <h3 className="font-semibold text-gray-900">{template.name}</h3>
+                      <Badge className={getTypeColor(template.type)}>
+                        {template.type}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-gray-600 mb-4">{template.description}</p>
+                    
+                    <Button size="sm" className="w-full" variant="outline">
+                      Quick Generate
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="custom" className="space-y-4">
+              <div className="text-center py-8">
+                <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Custom Document Builder</h3>
+                <p className="text-gray-600 mb-4">Create custom documents tailored to your specific needs</p>
+                <Button>
+                  Start Custom Builder
+                </Button>
+              </div>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
     </div>
