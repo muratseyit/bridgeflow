@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -34,15 +33,15 @@ const DocumentGenerator = ({ businessData }: DocumentGeneratorProps) => {
     console.log("Document added to list:", document);
   };
 
-  const handleDownload = (document: GeneratedDocument) => {
+  const handleDownload = (doc: GeneratedDocument) => {
     // Create a blob with the document content
-    const blob = new Blob([document.content], { type: 'text/plain' });
+    const blob = new Blob([doc.content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     
     // Create a temporary download link
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${document.templateName.replace(/\s+/g, '-').toLowerCase()}-${new Date(document.generatedAt).getTime()}.txt`;
+    link.download = `${doc.templateName.replace(/\s+/g, '-').toLowerCase()}-${new Date(doc.generatedAt).getTime()}.txt`;
     document.body.appendChild(link);
     link.click();
     
@@ -52,7 +51,7 @@ const DocumentGenerator = ({ businessData }: DocumentGeneratorProps) => {
     
     toast({
       title: "Download Started",
-      description: `${document.templateName} has been downloaded.`,
+      description: `${doc.templateName} has been downloaded.`,
     });
   };
 
