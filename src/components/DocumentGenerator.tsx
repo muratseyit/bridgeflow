@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -29,20 +28,20 @@ const DocumentGenerator = ({ businessData }: DocumentGeneratorProps) => {
   const [previewDocument, setPreviewDocument] = useState<GeneratedDocument | null>(null);
   const { toast } = useToast();
 
-  const handleDocumentGenerated = (document: GeneratedDocument) => {
-    setGeneratedDocuments(prev => [document, ...prev]);
-    console.log("Document added to list:", document);
+  const handleDocumentGenerated = (generatedDoc: GeneratedDocument) => {
+    setGeneratedDocuments(prev => [generatedDoc, ...prev]);
+    console.log("Document added to list:", generatedDoc);
   };
 
-  const handleDownload = (document: GeneratedDocument) => {
+  const handleDownload = (generatedDoc: GeneratedDocument) => {
     // Create a blob with the document content
-    const blob = new Blob([document.content], { type: 'text/plain' });
+    const blob = new Blob([generatedDoc.content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     
     // Create a temporary download link
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${document.templateName.replace(/\s+/g, '-').toLowerCase()}-${new Date(document.generatedAt).getTime()}.txt`;
+    link.download = `${generatedDoc.templateName.replace(/\s+/g, '-').toLowerCase()}-${new Date(generatedDoc.generatedAt).getTime()}.txt`;
     document.body.appendChild(link);
     link.click();
     
@@ -52,12 +51,12 @@ const DocumentGenerator = ({ businessData }: DocumentGeneratorProps) => {
     
     toast({
       title: "Download Started",
-      description: `${document.templateName} has been downloaded.`,
+      description: `${generatedDoc.templateName} has been downloaded.`,
     });
   };
 
-  const handlePreview = (document: GeneratedDocument) => {
-    setPreviewDocument(document);
+  const handlePreview = (generatedDoc: GeneratedDocument) => {
+    setPreviewDocument(generatedDoc);
   };
 
   const getTypeColor = (type: string) => {
