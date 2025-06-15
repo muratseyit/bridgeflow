@@ -3,8 +3,26 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { ArrowRight, BarChart3, FileText, Users, Zap, CheckCircle, Globe, TrendingUp, Shield, Clock, Target, Award } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const Features = () => {
+  const [isSchedulingDemo, setIsSchedulingDemo] = useState(false);
+  const { toast } = useToast();
+
+  const handleScheduleDemo = () => {
+    setIsSchedulingDemo(true);
+    
+    // Simulate scheduling a demo
+    setTimeout(() => {
+      setIsSchedulingDemo(false);
+      toast({
+        title: "Demo Scheduled!",
+        description: "We'll contact you within 24 hours to schedule your personalized demo.",
+      });
+    }, 2000);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
@@ -215,8 +233,14 @@ const Features = () => {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
-            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 text-lg">
-              Schedule Demo
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 text-lg"
+              onClick={handleScheduleDemo}
+              disabled={isSchedulingDemo}
+            >
+              {isSchedulingDemo ? "Scheduling..." : "Schedule Demo"}
             </Button>
           </div>
         </div>
