@@ -1,7 +1,8 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, BarChart3, FileText, Users, Zap, CheckCircle, Globe, TrendingUp, Shield, Clock, Target, Award } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { ArrowRight, BarChart3, FileText, Users, Zap, CheckCircle, Globe, TrendingUp, Shield, Clock, Target, Award, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -64,6 +65,36 @@ const Features = () => {
           <p className="text-xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
             Discover all the tools and features that make UK Bridge the perfect platform for Turkish businesses expanding to the UK market.
           </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/onboarding">
+              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg">
+                Get Started Free
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="lg" className="px-8 py-4 text-lg border-slate-300">
+                  <Play className="mr-2 h-5 w-5" />
+                  Watch Demo
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl w-full">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl font-bold text-center">UK Bridge Platform Demo</DialogTitle>
+                </DialogHeader>
+                <div className="aspect-video bg-slate-100 rounded-lg flex items-center justify-center">
+                  <div className="text-center">
+                    <Play className="h-16 w-16 text-slate-400 mx-auto mb-4" />
+                    <p className="text-slate-600 text-lg">Demo video will be embedded here</p>
+                    <p className="text-slate-500 text-sm mt-2">
+                      This would typically contain an embedded video player showing the platform features
+                    </p>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
       </section>
 
