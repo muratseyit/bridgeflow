@@ -1,8 +1,7 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { ArrowRight, BarChart3, FileText, Users, Zap, CheckCircle, Globe, TrendingUp, Shield, Clock, Target, Award, Play, Search, UserPlus } from "lucide-react";
+import { ArrowRight, BarChart3, FileText, Users, Zap, CheckCircle, Globe, TrendingUp, Shield, Clock, Target, Award, Play, Search, UserPlus, LineChart, Activity, PieChart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -22,6 +21,13 @@ const Features = () => {
         description: "We'll contact you within 24 hours to schedule your personalized demo.",
       });
     }, 2000);
+  };
+
+  const handleMarketIntelligenceClick = () => {
+    toast({
+      title: "Market Intelligence Activated!",
+      description: "Real-time data analysis for your business sector is now loading...",
+    });
   };
 
   return (
@@ -269,19 +275,162 @@ const Features = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-slate-200 hover:shadow-lg transition-shadow duration-300">
-              <CardHeader>
-                <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-2">
-                  <Target className="h-5 w-5 text-purple-600" />
+            <Dialog>
+              <DialogTrigger asChild>
+                <Card className="border-slate-200 hover:shadow-lg transition-shadow duration-300 cursor-pointer hover:border-purple-300">
+                  <CardHeader>
+                    <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-2">
+                      <Target className="h-5 w-5 text-purple-600" />
+                    </div>
+                    <CardTitle className="text-lg">Market Intelligence</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription>
+                      Access real-time market data, trends, and insights to make informed business decisions.
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl w-full max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl font-bold text-center flex items-center justify-center gap-2">
+                    <Target className="h-6 w-6 text-purple-600" />
+                    Market Intelligence Dashboard
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="grid md:grid-cols-2 gap-6 mt-6">
+                  <Card className="border-purple-200">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg flex items-center gap-2">
+                        <LineChart className="h-5 w-5 text-blue-600" />
+                        Real-Time Market Data
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">UK Food & Beverage Market</span>
+                          <span className="text-green-600 font-semibold">↗ +12.3%</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">Consumer Spending</span>
+                          <span className="text-blue-600 font-semibold">£2.1B monthly</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">Market Entry Cost</span>
+                          <span className="text-orange-600 font-semibold">↓ -8.2%</span>
+                        </div>
+                        <div className="bg-blue-50 p-3 rounded-md">
+                          <p className="text-xs text-blue-800">
+                            <strong>Insight:</strong> Organic food demand increased 23% in London area this quarter
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="border-emerald-200">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg flex items-center gap-2">
+                        <Activity className="h-5 w-5 text-emerald-600" />
+                        Competitive Intelligence
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">Direct Competitors</span>
+                          <span className="font-semibold">47 identified</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">Avg. Price Point</span>
+                          <span className="font-semibold">£15.50</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">Market Gap Score</span>
+                          <span className="text-green-600 font-semibold">8.4/10</span>
+                        </div>
+                        <div className="bg-emerald-50 p-3 rounded-md">
+                          <p className="text-xs text-emerald-800">
+                            <strong>Opportunity:</strong> 73% of competitors lack Turkish product variety
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="border-indigo-200">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg flex items-center gap-2">
+                        <PieChart className="h-5 w-5 text-indigo-600" />
+                        Consumer Insights
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">Target Demographics</span>
+                          <span className="font-semibold">25-45 years</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">Purchase Intent</span>
+                          <span className="text-green-600 font-semibold">High (78%)</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">Cultural Acceptance</span>
+                          <span className="text-blue-600 font-semibold">Very Positive</span>
+                        </div>
+                        <div className="bg-indigo-50 p-3 rounded-md">
+                          <p className="text-xs text-indigo-800">
+                            <strong>Trend:</strong> Turkish cuisine popularity up 45% in major UK cities
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="border-orange-200">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg flex items-center gap-2">
+                        <TrendingUp className="h-5 w-5 text-orange-600" />
+                        Market Timing
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">Best Launch Window</span>
+                          <span className="font-semibold">Mar-May 2024</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">Seasonal Demand</span>
+                          <span className="text-green-600 font-semibold">Peak Spring</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">Optimal Regions</span>
+                          <span className="font-semibold">London, Manchester</span>
+                        </div>
+                        <div className="bg-orange-50 p-3 rounded-md">
+                          <p className="text-xs text-orange-800">
+                            <strong>Recommendation:</strong> Launch in London first, expand to Manchester in Q3
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
-                <CardTitle className="text-lg">Market Intelligence</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Access real-time market data, trends, and insights to make informed business decisions.
-                </CardDescription>
-              </CardContent>
-            </Card>
+
+                <div className="mt-6 text-center">
+                  <Button 
+                    onClick={handleMarketIntelligenceClick}
+                    className="bg-purple-600 hover:bg-purple-700 text-white"
+                  >
+                    <Activity className="mr-2 h-4 w-4" />
+                    Start Market Analysis
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </section>
