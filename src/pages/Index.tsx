@@ -4,8 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, BarChart3, FileText, Users, Zap, CheckCircle, Globe, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Index = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
@@ -17,19 +21,20 @@ const Index = () => {
               <span className="text-2xl font-bold text-slate-900">UK Bridge</span>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <Link to="/features" className="text-slate-600 hover:text-slate-900 transition-colors">Features</Link>
-              <Link to="/pricing" className="text-slate-600 hover:text-slate-900 transition-colors">Pricing</Link>
-              <Link to="/support" className="text-slate-600 hover:text-slate-900 transition-colors">Support</Link>
+              <Link to="/features" className="text-slate-600 hover:text-slate-900 transition-colors">{t('nav.features')}</Link>
+              <Link to="/pricing" className="text-slate-600 hover:text-slate-900 transition-colors">{t('nav.pricing')}</Link>
+              <Link to="/support" className="text-slate-600 hover:text-slate-900 transition-colors">{t('nav.support')}</Link>
             </nav>
-            <div className="flex space-x-4">
+            <div className="flex items-center space-x-4">
+              <LanguageSwitcher />
               <Link to="/login">
                 <Button variant="ghost" className="text-slate-600 hover:text-slate-900">
-                  Login
+                  {t('nav.login')}
                 </Button>
               </Link>
               <Link to="/onboarding">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                  Get Started
+                  {t('nav.getStarted')}
                 </Button>
               </Link>
             </div>
@@ -43,26 +48,25 @@ const Index = () => {
           <div className="mb-8">
             <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-blue-100 text-blue-800 mb-6">
               <Zap className="h-4 w-4 mr-2" />
-              AI-Powered UK Market Entry
+              {t('hero.badge')}
             </span>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-6 leading-tight">
-            Expand Your Turkish Business to the 
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600"> UK Market</span>
+            {t('hero.title').split(' ').slice(0, -3).join(' ')} 
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600"> {t('hero.title').split(' ').slice(-3).join(' ')}</span>
           </h1>
           <p className="text-xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-            Get your AI-powered Marketability Score, receive a custom UK-readiness roadmap, and access verified partners 
-            to seamlessly launch your business in the United Kingdom.
+            {t('hero.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link to="/onboarding">
               <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg">
-                Start Your UK Journey
+                {t('hero.startJourney')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <Button variant="outline" size="lg" className="px-8 py-4 text-lg border-slate-300">
-              Watch Demo
+              {t('hero.watchDemo')}
             </Button>
           </div>
         </div>
@@ -73,10 +77,10 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-4">
-              Everything You Need for UK Market Entry
+              {t('features.title')}
             </h2>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-              Our AI-powered platform guides you through every step of expanding to the UK market
+              {t('features.subtitle')}
             </p>
           </div>
           
@@ -86,11 +90,11 @@ const Index = () => {
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
                   <BarChart3 className="h-6 w-6 text-blue-600" />
                 </div>
-                <CardTitle className="text-xl">AI Marketability Score</CardTitle>
+                <CardTitle className="text-xl">{t('features.aiScore')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-center">
-                  Get instant analysis of your business potential in the UK market with our advanced AI scoring engine
+                  {t('features.aiScoreDesc')}
                 </CardDescription>
               </CardContent>
             </Card>
@@ -100,11 +104,11 @@ const Index = () => {
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
                   <FileText className="h-6 w-6 text-green-600" />
                 </div>
-                <CardTitle className="text-xl">Document Generator</CardTitle>
+                <CardTitle className="text-xl">{t('features.docGenerator')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-center">
-                  Automatically generate contracts, NDAs, VAT forms, and other essential UK business documents
+                  {t('features.docGeneratorDesc')}
                 </CardDescription>
               </CardContent>
             </Card>
@@ -114,11 +118,11 @@ const Index = () => {
                 <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
                   <Users className="h-6 w-6 text-purple-600" />
                 </div>
-                <CardTitle className="text-xl">Partner Matching</CardTitle>
+                <CardTitle className="text-xl">{t('features.partnerMatching')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-center">
-                  Connect with verified UK accountants, legal advisors, and logistics providers tailored to your needs
+                  {t('features.partnerMatchingDesc')}
                 </CardDescription>
               </CardContent>
             </Card>
@@ -128,11 +132,11 @@ const Index = () => {
                 <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4">
                   <TrendingUp className="h-6 w-6 text-orange-600" />
                 </div>
-                <CardTitle className="text-xl">Smart Roadmap</CardTitle>
+                <CardTitle className="text-xl">{t('features.smartRoadmap')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-center">
-                  Receive a personalized step-by-step roadmap with legal, tax, and operational checklists
+                  {t('features.smartRoadmapDesc')}
                 </CardDescription>
               </CardContent>
             </Card>
@@ -145,10 +149,10 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-4">
-              How It Works
+              {t('howItWorks.title')}
             </h2>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-              Simple steps to get your business UK-ready
+              {t('howItWorks.subtitle')}
             </p>
           </div>
           
@@ -157,9 +161,9 @@ const Index = () => {
               <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-2xl font-bold text-white">1</span>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-4">Enter Business Details</h3>
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">{t('howItWorks.step1')}</h3>
               <p className="text-slate-600">
-                Complete our comprehensive onboarding form with your business information, products, and goals
+                {t('howItWorks.step1Desc')}
               </p>
             </div>
             
@@ -167,9 +171,9 @@ const Index = () => {
               <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-2xl font-bold text-white">2</span>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-4">Get AI Analysis</h3>
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">{t('howItWorks.step2')}</h3>
               <p className="text-slate-600">
-                Our AI engine analyzes your marketability and generates your UK readiness score instantly
+                {t('howItWorks.step2Desc')}
               </p>
             </div>
             
@@ -177,9 +181,9 @@ const Index = () => {
               <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-2xl font-bold text-white">3</span>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-4">Execute Your Plan</h3>
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">{t('howItWorks.step3')}</h3>
               <p className="text-slate-600">
-                Follow your personalized roadmap, generate documents, and connect with UK partners
+                {t('howItWorks.step3Desc')}
               </p>
             </div>
           </div>
@@ -190,20 +194,20 @@ const Index = () => {
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-green-600">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Ready to Expand to the UK?
+            {t('cta.title')}
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Join hundreds of Turkish businesses successfully entering the UK market with our AI-powered platform
+            {t('cta.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/onboarding">
               <Button size="lg" className="bg-white text-blue-600 hover:bg-slate-100 px-8 py-4 text-lg">
-                Start Free Analysis
+                {t('cta.startAnalysis')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 text-lg">
-              Schedule Consultation
+              {t('cta.scheduleConsult')}
             </Button>
           </div>
         </div>
@@ -219,36 +223,36 @@ const Index = () => {
                 <span className="text-xl font-bold text-white">UK Bridge</span>
               </div>
               <p className="text-slate-400">
-                Empowering Turkish SMEs to expand successfully into the UK market through AI-powered insights and expert guidance.
+                {t('footer.description')}
               </p>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-4">Platform</h4>
+              <h4 className="text-white font-semibold mb-4">{t('footer.platform')}</h4>
               <ul className="space-y-2">
-                <li><Link to="/features" className="hover:text-white transition-colors">Features</Link></li>
-                <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-                <li><Link to="/api" className="hover:text-white transition-colors">API</Link></li>
+                <li><Link to="/features" className="hover:text-white transition-colors">{t('nav.features')}</Link></li>
+                <li><Link to="/pricing" className="hover:text-white transition-colors">{t('nav.pricing')}</Link></li>
+                <li><Link to="/api" className="hover:text-white transition-colors">{t('footer.api')}</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-4">Support</h4>
+              <h4 className="text-white font-semibold mb-4">{t('footer.support')}</h4>
               <ul className="space-y-2">
-                <li><Link to="/help" className="hover:text-white transition-colors">Help Center</Link></li>
-                <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-                <li><Link to="/community" className="hover:text-white transition-colors">Community</Link></li>
+                <li><Link to="/help" className="hover:text-white transition-colors">{t('footer.helpCenter')}</Link></li>
+                <li><Link to="/contact" className="hover:text-white transition-colors">{t('footer.contact')}</Link></li>
+                <li><Link to="/community" className="hover:text-white transition-colors">{t('footer.community')}</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-4">Legal</h4>
+              <h4 className="text-white font-semibold mb-4">{t('footer.legal')}</h4>
               <ul className="space-y-2">
-                <li><Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
-                <li><Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
-                <li><Link to="/cookies" className="hover:text-white transition-colors">Cookie Policy</Link></li>
+                <li><Link to="/privacy" className="hover:text-white transition-colors">{t('footer.privacy')}</Link></li>
+                <li><Link to="/terms" className="hover:text-white transition-colors">{t('footer.terms')}</Link></li>
+                <li><Link to="/cookies" className="hover:text-white transition-colors">{t('footer.cookies')}</Link></li>
               </ul>
             </div>
           </div>
           <div className="border-t border-slate-800 mt-8 pt-8 text-center">
-            <p>&copy; 2024 UK Bridge. All rights reserved.</p>
+            <p>{t('footer.copyright')}</p>
           </div>
         </div>
       </footer>
