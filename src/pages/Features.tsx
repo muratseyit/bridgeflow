@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { ArrowRight, BarChart3, FileText, Users, Zap, CheckCircle, Globe, TrendingUp, Shield, Clock, Target, Award, Play } from "lucide-react";
+import { ArrowRight, BarChart3, FileText, Users, Zap, CheckCircle, Globe, TrendingUp, Shield, Clock, Target, Award, Play, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -126,6 +126,25 @@ const Features = () => {
                   <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Market demand analysis</li>
                   <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Competition assessment</li>
                   <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Risk evaluation</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-slate-200 hover:shadow-lg transition-shadow duration-300">
+              <CardHeader className="text-center pb-4">
+                <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <Search className="h-6 w-6 text-emerald-600" />
+                </div>
+                <CardTitle className="text-xl">Market Research</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-center mb-4">
+                  Access comprehensive UK market insights, consumer behavior data, and industry trends for informed decision-making
+                </CardDescription>
+                <ul className="text-sm text-slate-600 space-y-2">
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Consumer insights</li>
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Industry trends</li>
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Competitor analysis</li>
                 </ul>
               </CardContent>
             </Card>
