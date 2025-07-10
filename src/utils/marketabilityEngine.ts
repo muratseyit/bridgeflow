@@ -214,15 +214,15 @@ function calculateRevenueFactor(businessData: any): number {
     revenueValue = 250000; // midpoint of 0-500k
   }
   
-  // Convert TL to TL (assuming revenue is already in TL)
+  // Return multiplier directly (0 for 0-500k, 1.05 for 500k+, etc.)
   if (revenueValue >= 50000000) {
-    return 0.20; // 20%
+    return 1.20; // 120% of base score
   } else if (revenueValue >= 1000000) {
-    return 0.10; // 10%
+    return 1.10; // 110% of base score
   } else if (revenueValue >= 500000) {
-    return 0.05; // 5%
+    return 1.05; // 105% of base score
   } else {
-    return 0.00; // 0%
+    return 0.00; // 0% - score becomes 0
   }
 }
 
@@ -258,7 +258,7 @@ export function calculateMarketabilityScore(businessData: any): MarketabilityRes
   
   // Apply revenue factor coefficient
   const revenueFactor = calculateRevenueFactor(businessData);
-  const overallScore = Math.min(Math.round(baseScore * (1 + revenueFactor)), 100);
+  const overallScore = Math.min(Math.round(baseScore * revenueFactor), 100);
   
   // Generate insights
   const riskFactors = generateRiskFactors(metrics, businessData);
