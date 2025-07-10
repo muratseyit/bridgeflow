@@ -196,6 +196,36 @@ function calculateFounderAdvantage(businessData: any): number {
   return Math.min(score, 100);
 }
 
+// Calculate revenue factor coefficient
+function calculateRevenueFactor(businessData: any): number {
+  const revenueString = businessData.annualRevenue || '0-500k';
+  
+  // Extract numeric value from revenue range strings
+  let revenueValue = 0;
+  if (revenueString.includes('50m+')) {
+    revenueValue = 50000000;
+  } else if (revenueString.includes('10m-50m')) {
+    revenueValue = 25000000; // midpoint
+  } else if (revenueString.includes('2m-10m')) {
+    revenueValue = 5000000; // midpoint
+  } else if (revenueString.includes('500k-2m')) {
+    revenueValue = 1000000; // midpoint
+  } else {
+    revenueValue = 250000; // midpoint of 0-500k
+  }
+  
+  // Convert TL to TL (assuming revenue is already in TL)
+  if (revenueValue >= 50000000) {
+    return 0.20; // 20%
+  } else if (revenueValue >= 1000000) {
+    return 0.10; // 10%
+  } else if (revenueValue >= 500000) {
+    return 0.05; // 5%
+  } else {
+    return 0.00; // 0%
+  }
+}
+
 // Main scoring engine
 export function calculateMarketabilityScore(businessData: any): MarketabilityResult {
   const metrics: MarketabilityMetrics = {
@@ -217,7 +247,7 @@ export function calculateMarketabilityScore(businessData: any): MarketabilityRes
     founderAdvantage: 0.10
   };
   
-  const overallScore = Math.round(
+  const baseScore = Math.round(
     metrics.productMarketFit * weights.productMarketFit +
     metrics.regulatoryCompatibility * weights.regulatoryCompatibility +
     metrics.logisticsViability * weights.logisticsViability +
@@ -225,6 +255,10 @@ export function calculateMarketabilityScore(businessData: any): MarketabilityRes
     metrics.scalabilityPotential * weights.scalabilityPotential +
     metrics.founderAdvantage * weights.founderAdvantage
   );
+  
+  // Apply revenue factor coefficient
+  const revenueFactor = calculateRevenueFactor(businessData);
+  const overallScore = Math.min(Math.round(baseScore * (1 + revenueFactor)), 100);
   
   // Generate insights
   const riskFactors = generateRiskFactors(metrics, businessData);
